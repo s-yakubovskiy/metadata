@@ -1,6 +1,7 @@
 package metadata
 
 import (
+	"encoding/json"
 	"net/http"
 )
 
@@ -18,20 +19,20 @@ var (
 )
 
 type metadata struct {
-	version       string
-	buildTime     string
-	commitSHA     string
-	domain        string
-	canonicalName string
+	Version       string
+	BuildTime     string
+	CommitSHA     string
+	Domain        string
+	CanonicalName string
 }
 
 func newMetadata() *metadata {
 	return &metadata{
-		version:       Version,
-		buildTime:     BuildTime,
-		commitSHA:     CommitSHA,
-		domain:        Domain,
-		canonicalName: CanonicalName,
+		Version:       Version,
+		BuildTime:     BuildTime,
+		CommitSHA:     CommitSHA,
+		Domain:        Domain,
+		CanonicalName: CanonicalName,
 	}
 }
 
@@ -81,18 +82,18 @@ func (s *basicHandler) handle(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(status)
 
-	// meta := newMetadata()
+	meta := newMetadata()
 
 	// if not ?full=1 - return empty body. Kubernetes checks just HTTP code.
 	// if r.URL.Query().Get("full") != "1" {
-	_, _ = w.Write([]byte("{'hello': 'world'}"))
+	// _, _ = w.Write([]byte(meta))
 	// 	return
 	// }
 
 	// otherwise write JSON body.
-	// encoder := json.NewEncoder(w)
-	// encoder.SetIndent("", "    ")
-	// _ = encoder.Encode(meta)
+	encoder := json.NewEncoder(w)
+	encoder.SetIndent("", "    ")
+	_ = encoder.Encode(meta)
 	// _, _ = w.Write([]byte(meta))
 
 }
