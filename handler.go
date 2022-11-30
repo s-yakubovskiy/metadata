@@ -82,7 +82,7 @@ func (s *basicHandler) handle(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(status)
 
-	meta := newMetadata()
+	// meta := newMetadata()
 
 	// if not ?full=1 - return empty body. Kubernetes checks just HTTP code.
 	// if r.URL.Query().Get("full") != "1" {
@@ -93,7 +93,7 @@ func (s *basicHandler) handle(w http.ResponseWriter, r *http.Request) {
 	// otherwise write JSON body.
 	encoder := json.NewEncoder(w)
 	encoder.SetIndent("", "    ")
-	_ = encoder.Encode(meta)
+	_ = encoder.Encode(Domain)
 	// _, _ = w.Write([]byte(meta))
 
 }
