@@ -1,7 +1,6 @@
 package metadata
 
 import (
-	"encoding/json"
 	"net/http"
 )
 
@@ -82,16 +81,18 @@ func (s *basicHandler) handle(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(status)
 
-	meta := newMetadata()
+	// meta := newMetadata()
 
 	// if not ?full=1 - return empty body. Kubernetes checks just HTTP code.
 	// if r.URL.Query().Get("full") != "1" {
-	// 	_, _ = w.Write([]byte("{}\n"))
+	_, _ = w.Write([]byte("{'hello': 'world'}"))
 	// 	return
 	// }
 
 	// otherwise write JSON body.
-	encoder := json.NewEncoder(w)
-	encoder.SetIndent("", "    ")
-	_ = encoder.Encode(meta)
+	// encoder := json.NewEncoder(w)
+	// encoder.SetIndent("", "    ")
+	// _ = encoder.Encode(meta)
+	// _, _ = w.Write([]byte(meta))
+
 }
